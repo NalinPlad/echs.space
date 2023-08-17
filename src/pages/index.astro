@@ -63,6 +63,7 @@
 
 	<script>
 		const rocket = document.querySelector("#rocket")
+		const rocket_cont = document.querySelector("#rocket-bg")
 		rocket.style.opacity = 0
 		let velocityX = 0;
 		let velocityY = 0;
@@ -92,29 +93,44 @@
 			velocityX += (mouseX - posX) * 0.0001;
 			velocityY += (mouseY - posY) * 0.0001;
 			
-			requestAnimationFrame(update)
-
+			
 			// add particle trail behind the rocket that disipate over time
 			let trail = document.createElement("div")
 			trail.classList.add("trail")
 			trail.style.top = `${posY}px`
 			trail.style.left = `${posX}px`
-			rocket.appendChild(trail)
+			rocket_cont.appendChild(trail)
 			setTimeout(() => {
 				trail.remove()
-			}, 1000)
+			}, 100)
+			
+			// make rocket loop around
+			if (posX > window.innerWidth+100) {
+				posX = 0
+			}
+			if (posX < -100) {
+				posX = window.innerWidth
+			}
+			if (posY > window.innerHeight+100) {
+				posY = 0
+			}
+			if (posY < -100) {
+				posY = window.innerHeight
+			}
 
-			// if rocket hits walls it bounces off
-			if (posX < 0 || posX > window.innerWidth) {
-				velocityX *= -1.0
+
+			if (Math.abs(velocityX) > 50 || Math.abs(velocityY) > 50) {
+				alert("Welcome to the team, you are now a member of ECRC")
+				velocityX = 0
+				velocityY = 0
 			}
-			if (posY < 0 || posY > window.innerHeight) {
-				velocityY *= -1.0
-			}
+
+			console.log(velocityX, velocityY)
+			requestAnimationFrame(update)
 		}
-
+		
 		update()
-	</script>
+		</script>
 
 	<style>
 		.trail {
