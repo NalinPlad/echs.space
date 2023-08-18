@@ -90,7 +90,7 @@
 			rocket.style.transform = `rotate(${Math.atan2(velocityY, velocityX) - 5.5}rad)`
 
 			// attract proportional to distance
-			if(rocket.style.opacity >= 0.5) {
+			if(rocket.style.opacity >= 0.5 && velocityX < 30 && velocityY < 30) {
 				velocityX += (mouseX - posX) * 0.0001;
 				velocityY += (mouseY - posY) * 0.0001;
 			}
