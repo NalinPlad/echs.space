@@ -8,14 +8,33 @@
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 
-	<meta name="description" content="ECRC is a high school based rocketry club competing in the 2024 TARC competition"> <!-- ˜150 chars -->
-	<meta property="og:title" content="ECRC Home">
-	<meta property="og:description" content="ECRC is a high school based rocketry club competing in the 2024 TARC competition"> <!-- ˜300 chars -->
-	<meta property="og:site_name" content="ECHS.SPACE">
-	<meta property="og:locale" content="es_US">
-	<meta property="og:type" content="website">
-	<meta property="og:url" content="http://www.echs.space">
-	<meta property="og:image" content="http://www.echs.space/preview.jpg"> <!-- 200x200px - 1200x1200px -->
+    <!-- HTML Meta Tags -->
+    <title>ECRC Home</title>
+    <meta
+      name="description"
+      content="ECRC is a high school based rocketry club competing in the 2023 TARC competition"
+    />
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://www.echs.space" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ECRC Home" />
+    <meta
+      property="og:description"
+      content="ECRC is a high school based rocketry club competing in the 2023 TARC competition"
+    />
+    <meta property="og:image" content="http://www.echs.space/preview.jpg" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="echs.space" />
+    <meta property="twitter:url" content="https://www.echs.space" />
+    <meta name="twitter:title" content="ECRC Home" />
+    <meta
+      name="twitter:description"
+      content="ECRC is a high school based rocketry club competing in the 2023 TARC competition"
+    />
+    <meta name="twitter:image" content="http://www.echs.space/preview.jpg" />
 
     <title>ECHS.SPACE</title>
   </head>
@@ -24,302 +43,305 @@
       <div id="thing">
         <span>Welcome to</span>
         <span class="text-gradient_job">ECHS.space</span>
-		<br /> <br />
+        <br />
+        <br />
         <span>This is the home of</span>
         <span class="text-gradient_name">ECRC,</span>
         <span>the El Cerrito Rocketry Club.</span>
-		<br /><br />
+        <br /><br />
         <span>ECRC is launching</span>
         <span class="text-gradient_job">very soon</span>
       </div>
-	  <div id="rocket-bg">
-		<img id="rocket" src="/rocket.png" height="50" width="50"></img>
-	  </div>
+      <div id="rocket-bg">
+        <img id="rocket" src="/rocket.png" height="50" width="50" />
+      </div>
     </main>
-
-    <script lang="js">
-      // make every word of the div with class have a difference animation delay
-      const inDiv = document.querySelector("#thing");
-      let children = [...inDiv.children];
-      let i = 0;
-      children.forEach((child) => {
-        if (child.tagName === "DIV") {
-          child.classList.add("scroll_text");
-          return;
-        }
-        const words = child.innerText.split(" ");
-        child.innerHTML = "";
-        words.forEach((word) => {
-          child.innerHTML += `<span class="scroll_text" style="animation-delay: ${
-            i * 100 + 1000
-          }ms;">${word}</span> `;
-          i += word.includes(",") || word.includes(".") || word.includes("space") ? 5 : 1.5;
-        });
-        if (child.classList.contains("text-gradient_name")) {
-          i += 7;
-        }
-      });
-
-      // document.querySelector(".grid").style.animationDelay = `${
-      //   i * 100 + 1000
-      // }ms`;
-      setTimeout(() => {
-		// if on desktop
-		if (window.innerWidth > 800) {
-			document.querySelector("#rocket").style.opacity = 1;
-		}
-      }, i * 100 + 1000);
-    </script>
-
-	<script>
-		const rocket = document.querySelector("#rocket")
-		const rocket_cont = document.querySelector("#rocket-bg")
-		rocket.style.opacity = 0
-		let velocityX = 0;
-		let velocityY = 0;
-
-		let posX = 0;
-		let posY = 0;
-
-		let mouseX = 0;
-		let mouseY = 0;
-
-		document.addEventListener("mousemove", (e) => {
-			mouseX = e.clientX;
-			mouseY = e.clientY;
-		});
-
-		function update(){
-			rocket.style.top = `${posY}px`
-			rocket.style.left = `${posX}px`
-
-			posX += velocityX;
-			posY += velocityY;
-
-			// rotate towards movement vector
-			rocket.style.transform = `rotate(${Math.atan2(velocityY, velocityX) - 5.5}rad)`
-
-			// attract proportional to distance
-			if(rocket.style.opacity >= 0.5) {
-				velocityX += (mouseX - posX) * 0.0001;
-				velocityY += (mouseY - posY) * 0.0001;
-			}
-			
-			// // make rocket loop around
-			// if (posX > window.innerWidth+100) {
-			// 	posX = 0
-			// }
-			// if (posX < -100) {
-			// 	posX = window.innerWidth
-			// }
-			// if (posY > window.innerHeight+100) {
-			// 	posY = 0
-			// }
-			// if (posY < -100) {
-			// 	posY = window.innerHeight
-			// }
-
-
-			// console.log(velocityX, velocityY)
-			requestAnimationFrame(update)
-
-
-		}
-		
-		update()
-		</script>
-
-	<style>
-		.trail {
-			position: absolute;
-			width: 10px;
-			height: 10px;
-			border-radius: 50%;
-			background-color: white;
-			opacity: 0.5;
-			/* transition: all 1s ease-in-out; */
-		}
-
-		#rocket-bg {
-			position: fixed;
-			width: 100vw;
-			height: 100vh;
-		}
-
-		#rocket {
-			position: absolute;
-			opacity: 0;
-			will-change: top, left, transform;
-			transition: opacity 0.5s ease-in-out;
-		}
-	</style>
-
-    <style is:global>
-      .scroll_text {
-        animation: fadein 1s;
-        animation-delay: 1000ms;
-
-        color: white;
-        animation-fill-mode: both;
-        opacity: 0;
-
-        font-size: x-large;
-
-        display: inline-block;
-
-        transition: all 0.5s ease-in-out;
-
-        cursor: default;
-      }
-
-      .fade_image {
-        animation: fadeinimg 1s;
-        transition: all 0.5s ease-in-out;
-        animation-fill-mode: both;
-      }
-
-      @keyframes fadein {
-        from {
-          opacity: 0;
-          transform: rotate3d(1, 0, 0, 90deg) translate3d(0, -20px, -50px);
-          text-shadow: 0 0 10px rgba(255, 255, 255, 1);
-        }
-        to {
-          opacity: 1;
-          transform: rotate3d(1, 0, 0, 0deg) translate3d(0, 0, 0);
-          text-shadow: 0 0 10px rgba(255, 255, 255, 0);
-        }
-      }
-
-      @keyframes fadeinimg {
-        from {
-          opacity: 0;
-          /* translate: -20px, -50px; */
-          text-shadow: 0 0 10px rgba(255, 255, 255, 1);
-        }
-        to {
-          opacity: 1;
-          /* translate: 0, 0; */
-          text-shadow: 0 0 10px rgba(255, 255, 255, 0);
-        }
-      }
-    </style>
-
-    <style is:global>
-      .text-gradient_name > span {
-        background-image: var(--accent-gradient);
-
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-size: 400%;
-        background-position: 0%;
-
-        /* font-size: xx-large; */
-
-        /* text-shadow: 0 0 10px rgba(255, 255, 255, 0.527) !important; */
-      }
-
-      .text-gradient_job > span {
-        background-image: var(--accent-gradient-alt2);
-
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-size: 400%;
-        background-position: 0%;
-
-        /* font-weight: 300; */
-
-        font-family: system-ui, sans-serif;
-
-        /* font-size: xx-large; */
-
-        /* text-shadow: 0 0 10px rgba(255, 255, 255, 0.527) !important; */
-        /* text-decoration: 2px rgba(255, 255, 255, 0.384) underline; */
-      }
-
-      .text-gradient_name > span:hover {
-        background-position: 10%;
-      }
-    </style>
-
-    <style>
-      main {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        /* height: 100vh; */
-        margin: 1rem;
-      }
-
-      #thing {
-        text-align: left;
-        max-width: 20vw;
-        cursor: default;
-      }
-
-      /* #thing is 50vw wide unless we are on mobile */
-      @media (max-width: 600px) {
-        #thing {
-          /* text-align: center; */
-          max-width: none;
-        }
-      }
-    </style>
-
-    <style is:global>
-      :root {
-        --accent: 124, 58, 237;
-        --accent-gradient: linear-gradient(
-          45deg,
-          rgb(var(--accent)),
-          #da62c4 30%,
-          white 60%
-        );
-        --accent-gradient-alt: linear-gradient(
-          45deg,
-          rgb(var(--accent)),
-          #f43030 30%,
-          rgb(241, 43, 255) 60%
-        );
-        /* --accent-gradient-alt2: linear-gradient(5deg, #1bce95 0%, rgb(117, 75, 195) 100%);
-		 */
-        --accent-gradient-alt2: linear-gradient(
-          45deg,
-          rgb(var(--accent)),
-          #1bce95 30%,
-          rgb(117, 75, 195) 60%
-        );
-      }
-      html {
-        font-family: system-ui, sans-serif;
-        background-color: black;
-      }
-      code {
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-      }
-
-      ::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-        background-color: #1a1a1a;
-      }
-      /* should transition smoothly betwen positions */
-
-      ::-webkit-scrollbar-thumb {
-        background-color: #333;
-        border-radius: 10px;
-        transition: background-color 0.2s ease-in-out;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background-color: #454545;
-      }
-
-      ::-webkit-scrollbar-track {
-        background-color: #1a1a1a;
-        border-radius: 10px;
-      }
-    </style>
   </body>
+
+  <script lang="js">
+    // make every word of the div with class have a difference animation delay
+    const inDiv = document.querySelector("#thing");
+    let children = [...inDiv.children];
+    let i = 0;
+    children.forEach((child) => {
+      if (child.tagName === "DIV") {
+        child.classList.add("scroll_text");
+        return;
+      }
+      const words = child.innerText.split(" ");
+      child.innerHTML = "";
+      words.forEach((word) => {
+        child.innerHTML += `<span class="scroll_text" style="animation-delay: ${
+          i * 100 + 1000
+        }ms;">${word}</span> `;
+        i +=
+          word.includes(",") || word.includes(".") || word.includes("space")
+            ? 5
+            : 1.5;
+      });
+      if (child.classList.contains("text-gradient_name")) {
+        i += 7;
+      }
+    });
+
+    // document.querySelector(".grid").style.animationDelay = `${
+    //   i * 100 + 1000
+    // }ms`;
+    setTimeout(() => {
+      // if on desktop
+      if (window.innerWidth > 800) {
+        document.querySelector("#rocket").style.opacity = 1;
+      }
+    }, i * 100 + 1000);
+  </script>
+
+  <script>
+    const rocket = document.querySelector("#rocket");
+    const rocket_cont = document.querySelector("#rocket-bg");
+    rocket.style.opacity = 0;
+    let velocityX = 0;
+    let velocityY = 0;
+
+    let posX = 0;
+    let posY = 0;
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function update() {
+      rocket.style.top = `${posY}px`;
+      rocket.style.left = `${posX}px`;
+
+      posX += velocityX;
+      posY += velocityY;
+
+      // rotate towards movement vector
+      rocket.style.transform = `rotate(${
+        Math.atan2(velocityY, velocityX) - 5.5
+      }rad)`;
+
+      // attract proportional to distance
+      if (rocket.style.opacity >= 0.5) {
+        velocityX += (mouseX - posX) * 0.0001;
+        velocityY += (mouseY - posY) * 0.0001;
+      }
+
+      // // make rocket loop around
+      // if (posX > window.innerWidth+100) {
+      // 	posX = 0
+      // }
+      // if (posX < -100) {
+      // 	posX = window.innerWidth
+      // }
+      // if (posY > window.innerHeight+100) {
+      // 	posY = 0
+      // }
+      // if (posY < -100) {
+      // 	posY = window.innerHeight
+      // }
+
+      // console.log(velocityX, velocityY)
+      requestAnimationFrame(update);
+    }
+
+    update();
+  </script>
+
+  <style>
+    .trail {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: white;
+      opacity: 0.5;
+      /* transition: all 1s ease-in-out; */
+    }
+
+    #rocket-bg {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #rocket {
+      position: absolute;
+      opacity: 0;
+      will-change: top, left, transform;
+      transition: opacity 0.5s ease-in-out;
+    }
+  </style>
+
+  <style is:global>
+    .scroll_text {
+      animation: fadein 1s;
+      animation-delay: 1000ms;
+
+      color: white;
+      animation-fill-mode: both;
+      opacity: 0;
+
+      font-size: x-large;
+
+      display: inline-block;
+
+      transition: all 0.5s ease-in-out;
+
+      cursor: default;
+    }
+
+    .fade_image {
+      animation: fadeinimg 1s;
+      transition: all 0.5s ease-in-out;
+      animation-fill-mode: both;
+    }
+
+    @keyframes fadein {
+      from {
+        opacity: 0;
+        transform: rotate3d(1, 0, 0, 90deg) translate3d(0, -20px, -50px);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+      }
+      to {
+        opacity: 1;
+        transform: rotate3d(1, 0, 0, 0deg) translate3d(0, 0, 0);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0);
+      }
+    }
+
+    @keyframes fadeinimg {
+      from {
+        opacity: 0;
+        /* translate: -20px, -50px; */
+        text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+      }
+      to {
+        opacity: 1;
+        /* translate: 0, 0; */
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0);
+      }
+    }
+  </style>
+
+  <style is:global>
+    .text-gradient_name > span {
+      background-image: var(--accent-gradient);
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 400%;
+      background-position: 0%;
+
+      /* font-size: xx-large; */
+
+      /* text-shadow: 0 0 10px rgba(255, 255, 255, 0.527) !important; */
+    }
+
+    .text-gradient_job > span {
+      background-image: var(--accent-gradient-alt2);
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 400%;
+      background-position: 0%;
+
+      /* font-weight: 300; */
+
+      font-family: system-ui, sans-serif;
+
+      /* font-size: xx-large; */
+
+      /* text-shadow: 0 0 10px rgba(255, 255, 255, 0.527) !important; */
+      /* text-decoration: 2px rgba(255, 255, 255, 0.384) underline; */
+    }
+
+    .text-gradient_name > span:hover {
+      background-position: 10%;
+    }
+  </style>
+
+  <style>
+    main {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      /* height: 100vh; */
+      margin: 1rem;
+    }
+
+    #thing {
+      text-align: left;
+      max-width: 20vw;
+      cursor: default;
+    }
+
+    /* #thing is 50vw wide unless we are on mobile */
+    @media (max-width: 600px) {
+      #thing {
+        /* text-align: center; */
+        max-width: none;
+      }
+    }
+  </style>
+
+  <style is:global>
+    :root {
+      --accent: 124, 58, 237;
+      --accent-gradient: linear-gradient(
+        45deg,
+        rgb(var(--accent)),
+        #da62c4 30%,
+        white 60%
+      );
+      --accent-gradient-alt: linear-gradient(
+        45deg,
+        rgb(var(--accent)),
+        #f43030 30%,
+        rgb(241, 43, 255) 60%
+      );
+      /* --accent-gradient-alt2: linear-gradient(5deg, #1bce95 0%, rgb(117, 75, 195) 100%);
+		 */
+      --accent-gradient-alt2: linear-gradient(
+        45deg,
+        rgb(var(--accent)),
+        #1bce95 30%,
+        rgb(117, 75, 195) 60%
+      );
+    }
+    html {
+      font-family: system-ui, sans-serif;
+      background-color: black;
+    }
+    code {
+      font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+        DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+      background-color: #1a1a1a;
+    }
+    /* should transition smoothly betwen positions */
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #333;
+      border-radius: 10px;
+      transition: background-color 0.2s ease-in-out;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #454545;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: #1a1a1a;
+      border-radius: 10px;
+    }
+  </style>
 </html>
