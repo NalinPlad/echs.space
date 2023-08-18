@@ -100,25 +100,24 @@
 			rocket.style.transform = `rotate(${Math.atan2(velocityY, velocityX) - 5.5}rad)`
 
 			// attract proportional to distance
-			if(rocket.style.opacity >= 0.5 && velocityX < 30 && velocityY < 30) {
+			if(rocket.style.opacity >= 0.5) {
 				velocityX += (mouseX - posX) * 0.0001;
 				velocityY += (mouseY - posY) * 0.0001;
 			}
 			
-			
-			// make rocket loop around
-			if (posX > window.innerWidth+100) {
-				posX = 0
-			}
-			if (posX < -100) {
-				posX = window.innerWidth
-			}
-			if (posY > window.innerHeight+100) {
-				posY = 0
-			}
-			if (posY < -100) {
-				posY = window.innerHeight
-			}
+			// // make rocket loop around
+			// if (posX > window.innerWidth+100) {
+			// 	posX = 0
+			// }
+			// if (posX < -100) {
+			// 	posX = window.innerWidth
+			// }
+			// if (posY > window.innerHeight+100) {
+			// 	posY = 0
+			// }
+			// if (posY < -100) {
+			// 	posY = window.innerHeight
+			// }
 
 
 			// console.log(velocityX, velocityY)
@@ -152,7 +151,6 @@
 			opacity: 0;
 			will-change: top, left, transform;
 			transition: opacity 0.5s ease-in-out;
-			
 		}
 	</style>
 
