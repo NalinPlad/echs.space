@@ -90,19 +90,11 @@
 			rocket.style.transform = `rotate(${Math.atan2(velocityY, velocityX) - 5.5}rad)`
 
 			// attract proportional to distance
-			velocityX += (mouseX - posX) * 0.0001;
-			velocityY += (mouseY - posY) * 0.0001;
+			if(rocket.style.opacity >= 0.5) {
+				velocityX += (mouseX - posX) * 0.0001;
+				velocityY += (mouseY - posY) * 0.0001;
+			}
 			
-			
-			// add particle trail behind the rocket that disipate over time
-			let trail = document.createElement("div")
-			trail.classList.add("trail")
-			trail.style.top = `${posY}px`
-			trail.style.left = `${posX}px`
-			rocket_cont.appendChild(trail)
-			setTimeout(() => {
-				trail.remove()
-			}, 100)
 			
 			// make rocket loop around
 			if (posX > window.innerWidth+100) {
@@ -126,10 +118,9 @@
 			}
 
 			// console.log(velocityX, velocityY)
+			requestAnimationFrame(update)
 
-			if(rocket.style.opacity >= 0.5) {
-				requestAnimationFrame(update)
-			}
+
 		}
 		
 		update()
