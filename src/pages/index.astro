@@ -126,7 +126,10 @@
 			}
 
 			// console.log(velocityX, velocityY)
-			requestAnimationFrame(update)
+
+			if(rocket.style.opacity < 1) {
+				requestAnimationFrame(update)
+			}
 		}
 		
 		update()
