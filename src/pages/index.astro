@@ -1,10 +1,11 @@
 ---
+import CornerMenu from "../components/CornerMenu.astro";
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="/rocket.png" />
+    <link rel="icon" type="image/png" href="/ECRC.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 
@@ -51,9 +52,41 @@
         <br /><br />
         <span>ECRC is launching</span>
         <span class="text-gradient_job">very soon</span>
+        <br /><br />
+        <span>(arrows keys to control rocket)</span>
       </div>
+
+      <CornerMenu />
+
       <div id="rocket-bg">
-        <img id="rocket" src="/rocket.png" height="50" width="50" onclick="window.location.href='/legal'"/>
+        <img
+          id="rocket"
+          src="/rocket_off.png"
+          height="50"
+          width="50"
+          onclick="
+          window.location.href = '/legal'
+"
+        />
+      </div>
+      <div id="footer">
+        <div class="footer-item">
+          <a href="https://github.com/NalinPlad/echs.space">OS</a>
+        </div>
+        <div class="footer-item">
+          <a href="https://rocketcontest.org/">TARC</a>
+        </div>
+        <div class="footer-item">
+          <a href="https://bank.hackclub.com/donations/start/echs-space"
+            >Donate 🌟</a
+          >
+        </div>
+        <div class="footer-item">
+          <a href="mailto:info@echs.space">Contact</a>
+        </div>
+        <div class="footer-item">
+          <a href="https://bank.hackclub.com/echs-space">501(c)(3)<a/>
+        </div>
       </div>
     </main>
   </body>
@@ -92,25 +125,69 @@
       if (window.innerWidth > 800) {
         document.querySelector("#rocket").style.opacity = 1;
       }
+
+      document.querySelector("#footer").style.opacity = 1;
     }, i * 100 + 1000);
   </script>
 
   <script>
     const rocket = document.querySelector("#rocket");
     const rocket_cont = document.querySelector("#rocket-bg");
+
     rocket.style.opacity = 0;
-    let velocityX = 0;
-    let velocityY = 0;
+
+    let velocityX = 0.0;
+    let velocityY = 0.0;
+
+    let rotateVelocity = 0.0;
+
+    const GRAVITY = 0.005;
+
+    let heading = 10;
+    let speed = 1.75;
 
     let posX = 0;
     let posY = 0;
 
-    let mouseX = 0;
-    let mouseY = 0;
+    let autopilot = false;
 
-    document.addEventListener("mousemove", (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+    // are these keys pressed
+    let up = false;
+    let down = false;
+    let left = false;
+    let right = false;
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowUp") {
+        up = true;
+        // change image source to rocket
+        rocket.src = "/rocket.png";
+      }
+      if (e.key === "ArrowDown") {
+        down = true;
+      }
+      if (e.key === "ArrowLeft") {
+        left = true;
+      }
+      if (e.key === "ArrowRight") {
+        right = true;
+      }
+    });
+
+    document.addEventListener("keyup", (e) => {
+      if (e.key === "ArrowUp") {
+        up = false;
+        rocket.src="/rocket_off.png"
+      }
+      if (e.key === "ArrowDown") {
+        down = false;
+      }
+      if (e.key === "ArrowLeft") {
+        left = false;
+      }
+      if (e.key === "ArrowRight") {
+        right = false;
+      }
     });
 
     function update() {
@@ -120,40 +197,61 @@
       posX += velocityX;
       posY += velocityY;
 
-      // rotate towards movement vector
-      rocket.style.transform = `rotate(${
-        Math.atan2(velocityY, velocityX) - 5.5
-      }rad)`;
+      velocityY += GRAVITY;
 
-      // attract proportional to distance
-      if (rocket.style.opacity >= 0.5) {
-        velocityX += (mouseX - posX) * 0.0001;
-        velocityY += (mouseY - posY) * 0.0001;
+      // bounce off the bottom(footer)
+      if (posY + 50 > window.innerHeight - 50) {
+        velocityY *= -0.2;
+        posY = window.innerHeight - 50 - 50;
+        velocityX *= 0.9;
       }
 
-      // // make rocket loop around
-      // if (posX > window.innerWidth+100) {
-      // 	posX = 0
-      // }
-      // if (posX < -100) {
-      // 	posX = window.innerWidth
-      // }
-      // if (posY > window.innerHeight+100) {
-      // 	posY = 0
-      // }
-      // if (posY < -100) {
-      // 	posY = window.innerHeight
-      // }
+      velocityX += -Math.sin(heading) * speed;
+      velocityY += Math.cos(heading) * speed;
 
-      // console.log(velocityX, velocityY)
-	  
+      
+      speed = Math.min(speed, 0.04);
+      
+      if (!autopilot) {
+        if (up) {
+          speed += 0.0003;
+        } else if (speed > 0) {
+          speed -= 0.03;
+          speed = Math.max(speed, 0);
+        }
+        if (left) {
+          rotateVelocity -= 0.001;
+        }
+        if (right) {
+          rotateVelocity += 0.001;
+        }
+      }
+
+      rotateVelocity *= 0.99;
+
+      heading += rotateVelocity;
+
+      rocket.style.transform = `rotate(${heading - 4}rad)`;
+
+      if (autopilot){
+
+      }
+
       requestAnimationFrame(update);
     }
 
     update();
   </script>
 
-  <style>
+  <style is:global>
+    main {
+      margin: 0;
+    }
+
+    body {
+      margin: 0;
+    }
+
     .trail {
       position: absolute;
       width: 10px;
@@ -168,13 +266,57 @@
       position: fixed;
       width: 100vw;
       height: 100vh;
+      background: rgb(0, 22, 255);
+      background: linear-gradient(
+        0deg,
+        rgba(0, 22, 255, 0.1) 0%,
+        rgba(0, 0, 0, 1) 100%
+      );
+      margin: 0;
+      z-index: -1;
     }
 
     #rocket {
       position: absolute;
-      opacity: 0;
+      /* opacity: 0; */
       will-change: top, left, transform;
       transition: opacity 0.5s ease-in-out;
+    }
+
+    #footer {
+      position: fixed;
+      bottom: 0;
+      width: 100vw;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(20, 20, 70, 0.5);
+
+      opacity: 0.5;
+
+      transition: all 0.5s ease-in-out;
+    }
+
+    .footer-item {
+      margin-inline: 20px;
+      color: rgb(100, 100, 100);
+    }
+
+    .footer-item > a {
+      color: rgb(100, 100, 200);
+      font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo,
+        Consolas, "DejaVu Sans Mono", monospace;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .footer-item > a:hover {
+      color: rgb(255, 255, 255);
+    }
+
+    .contact::after {
+      content: " →";
     }
   </style>
 
@@ -266,20 +408,20 @@
     }
   </style>
 
-  <style>
+  <style is:global>
     main {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
       /* height: 100vh; */
-      margin: 1rem;
     }
 
     #thing {
       text-align: left;
       max-width: 20vw;
       cursor: default;
+      padding: 20px;
     }
 
     /* #thing is 50vw wide unless we are on mobile */
