@@ -126,7 +126,7 @@ import CornerMenu from "../components/CornerMenu.astro";
         document.querySelector("#rocket").style.opacity = 1;
       }
 
-      document.querySelector("#footer").style.opacity = 1;
+      // document.querySelector("#footer").style.opacity = 1;
     }, i * 100 + 1000);
   </script>
 
@@ -278,7 +278,7 @@ import CornerMenu from "../components/CornerMenu.astro";
 
     #rocket {
       position: absolute;
-      /* opacity: 0; */
+      opacity: 0;
       will-change: top, left, transform;
       transition: opacity 0.5s ease-in-out;
     }
