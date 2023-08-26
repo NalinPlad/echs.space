@@ -1,0 +1,87 @@
+---
+---
+
+<div id="footer">
+  <div class="footer-item">
+    <a href="https://github.com/NalinPlad/echs.space" data-tip="Click to visit github.com to see the source code for this website. Website built by Ajith 😎 with Astro and VIM">OS</a>
+  </div>
+  <div class="footer-item">
+    <a href="https://rocketcontest.org/" data-tip="Click to visit the homepage for The American Rocketry Competition. This is the competition that ECRC competes in 🚀">TARC</a>
+  </div>
+  <div class="footer-item">
+    <a href="https://bank.hackclub.com/donations/start/echs-space" data-tip="Click to donate to ECRC! Donations let us continue to provide a free and fun rocketry experience to the El Cerrito community ✨">Donate 🌟</a>
+  </div>
+  <div class="footer-item">
+    <a href="mailto:info@echs.space" data-tip="Click here to email us at info@echs.space 📬">Contact</a>
+  </div>
+  <div class="footer-item">
+    <a
+      href="https://bank.hackclub.com/echs-space"
+      data-tip="ECRC is fiscally sponsored by Hack Club Bank, a project by The Hack Foundation (d.b.a. Hack Club), a 501(c)(3) nonprofit (EIN: 81-2908499). Click this link to visit our transparent financials page 🏦"
+      >501(c)(3)<a></a>
+    </a>
+  </div>
+</div>
+
+<style>
+    #footer {
+      position: fixed;
+      bottom: 0;
+      width: 100vw;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(20, 20, 70, 0.5);
+
+      opacity: 0.5;
+
+      transition: all 0.5s ease-in-out;
+    }
+
+    .footer-item {
+      margin-inline: 20px;
+      color: rgb(100, 100, 100);
+    }
+
+    .footer-item > a {
+      color: rgb(100, 100, 200);
+      font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo,
+        Consolas, "DejaVu Sans Mono", monospace;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .footer-item > a:hover {
+      color: rgb(255, 255, 255);
+    }
+
+    .contact::after {
+      content: " →";
+    }
+
+    [data-tip] {
+      position: relative;
+    } 
+
+    [data-tip]:after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 50%;
+      bottom: 150%; /* put it on the top */
+      background-color: rgba(0,0,0,0.8);
+      color: white;
+      border-radius:5px;
+      outline: 1px solid white;
+      padding: 5px;
+      width: 300px;
+      opacity: 0;
+      -webkit-transition: all 0.25s ease-in-out; /* 👈 Change the time to meet your requirements. */
+      transform: scale(0.2) rotate(20deg);
+    }
+
+    [data-tip]:hover:after {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+</style>

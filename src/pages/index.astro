@@ -1,5 +1,6 @@
 ---
 import CornerMenu from "../components/CornerMenu.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <html lang="en">
@@ -53,10 +54,8 @@ import CornerMenu from "../components/CornerMenu.astro";
         <span>ECRC is launching</span>
         <span class="text-gradient_job">very soon</span>
         <br /><br />
-        <span>(arrows keys to control rocket)</span>
+        <span>(use arrows keys to control rocket)</span>
       </div>
-
-      <CornerMenu />
 
       <div id="rocket-bg">
         <img
@@ -69,25 +68,7 @@ import CornerMenu from "../components/CornerMenu.astro";
 "
         />
       </div>
-      <div id="footer">
-        <div class="footer-item">
-          <a href="https://github.com/NalinPlad/echs.space">OS</a>
-        </div>
-        <div class="footer-item">
-          <a href="https://rocketcontest.org/">TARC</a>
-        </div>
-        <div class="footer-item">
-          <a href="https://bank.hackclub.com/donations/start/echs-space"
-            >Donate 🌟</a
-          >
-        </div>
-        <div class="footer-item">
-          <a href="mailto:info@echs.space">Contact</a>
-        </div>
-        <div class="footer-item">
-          <a href="https://bank.hackclub.com/echs-space">501(c)(3)<a/>
-        </div>
-      </div>
+      <Footer />
     </main>
   </body>
 
@@ -126,7 +107,7 @@ import CornerMenu from "../components/CornerMenu.astro";
         document.querySelector("#rocket").style.opacity = 1;
       }
 
-      // document.querySelector("#footer").style.opacity = 1;
+      document.querySelector("#footer").style.opacity = 1;
     }, i * 100 + 1000);
   </script>
 
@@ -158,7 +139,7 @@ import CornerMenu from "../components/CornerMenu.astro";
     let right = false;
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowUp") {
+      if (e.key === "ArrowUp" && rocket.style.opacity === "1") {
         up = true;
         // change image source to rocket
         rocket.src = "/rocket.png";
@@ -281,38 +262,6 @@ import CornerMenu from "../components/CornerMenu.astro";
       opacity: 0;
       will-change: top, left, transform;
       transition: opacity 0.5s ease-in-out;
-    }
-
-    #footer {
-      position: fixed;
-      bottom: 0;
-      width: 100vw;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(20, 20, 70, 0.5);
-
-      opacity: 0.5;
-
-      transition: all 0.5s ease-in-out;
-    }
-
-    .footer-item {
-      margin-inline: 20px;
-      color: rgb(100, 100, 100);
-    }
-
-    .footer-item > a {
-      color: rgb(100, 100, 200);
-      font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo,
-        Consolas, "DejaVu Sans Mono", monospace;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    .footer-item > a:hover {
-      color: rgb(255, 255, 255);
     }
 
     .contact::after {
